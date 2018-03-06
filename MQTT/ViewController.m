@@ -201,7 +201,7 @@
 #if 0
     BOOL result = [_session publishAndWaitData:data onTopic:@"MQTTExample/Message" retain:YES qos:MQTTQosLevelExactlyOnce];
 #else
-    BOOL result = [_manager sendData:data topic:@"MQTTExample/Message" qos:MQTTQosLevelExactlyOnce retain:FALSE];
+    UInt16 result = [_manager sendData:data topic:@"MQTTExample/Message" qos:MQTTQosLevelExactlyOnce retain:FALSE];
 //    [_manager.session publishAndWaitData:data onTopic:@"MQTTExample/Message" retain:YES qos:MQTTQosLevelExactlyOnce];
 #endif
     DDLogInfo(@"%i",result);
