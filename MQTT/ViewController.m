@@ -188,7 +188,7 @@
     
 #else
     MQTTSessionManager *manager = [[MQTTSessionManager alloc]init];
-    [manager connectTo:@"iot.eclipse.org" port:1883 tls:NO keepalive:60 clean:false auth:NO user:nil pass:nil willTopic:@"MQTTExample/Message" will:[@"hello world! Disconnect!" dataUsingEncoding:NSUTF8StringEncoding] willQos:MQTTQosLevelExactlyOnce willRetainFlag:YES withClientId:@"ExampleAndroidClient"];
+    [manager connectTo:@"iot.eclipse.org" port:1883 tls:NO keepalive:60 clean:true auth:NO user:nil pass:nil willTopic:@"MQTTExample/Message" will:[@"hello world! Disconnect!" dataUsingEncoding:NSUTF8StringEncoding] willQos:MQTTQosLevelExactlyOnce willRetainFlag:YES withClientId:@"ExampleAndroidClient"];
     manager.delegate = self;
     [manager addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
     manager.subscriptions = @{@"MQTTExample/Message":@(MQTTQosLevelExactlyOnce)};
@@ -201,7 +201,8 @@
 #if 0
     BOOL result = [_session publishAndWaitData:data onTopic:@"MQTTExample/Message" retain:YES qos:MQTTQosLevelExactlyOnce];
 #else
-    BOOL result = [_manager.session publishAndWaitData:data onTopic:@"MQTTExample/Message" retain:YES qos:MQTTQosLevelExactlyOnce];
+    BOOL result = [_manager sendData:data topic:@"MQTTExample/Message" qos:MQTTQosLevelExactlyOnce retain:FALSE];
+//    [_manager.session publishAndWaitData:data onTopic:@"MQTTExample/Message" retain:YES qos:MQTTQosLevelExactlyOnce];
 #endif
     DDLogInfo(@"%i",result);
 }
